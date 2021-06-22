@@ -71,8 +71,8 @@ def new_control_task(loc_server, logger):
         return True
 
 
-def get_next_action(last_action, new_actions, logger):
-
+def get_next_action(last_action, new_actions, state, logger):
+    state = list(map(float, state.replace("(","").replace(")","").split(',')))
     new_actions_conc = []
     good_candidate_idx = 0
     idx = 0
@@ -96,7 +96,6 @@ def get_next_action(last_action, new_actions, logger):
                 break
 
         idx += 1
-    
     
     return new_actions_conc[good_candidate_idx]
     
@@ -129,7 +128,7 @@ def get_control_action(s, logger):
         logger.log("The controller returned no actions.")
         return [True, "stop"]
 
-    action = get_next_action(last_action, actions_list, logger)
+    action = get_next_action(last_action, actions_list, s_send, logger)
     last_action = action
     return [False, action]
 
