@@ -1,0 +1,19 @@
+{
+    "configurations": [
+      {
+        "name": "Python: Current File (Integrated Terminal)",
+        "type": "python",
+        "request": "launch",
+        "program": "${file}",
+        "console": "integratedTerminal",
+        "env": { "PYTHONPATH": "/Library/Frameworks/Python.framework/Versions/3.8/lib/python3.8/site-packages"}
+      },
+      {
+        "name": "Python: Current File (External Terminal)",
+        "type": "python",
+        "request": "launch",
+        "program": "${file}",
+        "console": "externalTerminal"
+      }
+    ]
+  }
