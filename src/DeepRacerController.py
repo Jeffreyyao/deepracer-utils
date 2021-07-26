@@ -102,15 +102,17 @@ class DeepRacerController():
                 # writing information to log files
                 self.logger.log("Loop #" + str(planningloop_index) + "." + str(controlloop_index) + ": state_time=" + str(get_state_total_time) + ", control_time=" + str(control_total_time) + ", action=" + str(action))
 
-                # delay
-                if total_time < self.tau:
-                    time.sleep(self.tau - total_time)
-                else:
-                    if total_time/self.tau > 2.5:
-                        self.motion_control.stop()
-                        self.logger.log("Stopped due excess violation of real-time deadline. Total time = " + str(total_time))
-                        should_exit = True
-                        break
+                # tau=0.0 means no realtime window enformement/check
+                # tau>0.0 means realtime window will be enforced/checked
+                if self.tau > 0.0:
+                    if total_time < self.tau:
+                        time.sleep(self.tau - total_time)
+                    else:
+                        if total_time/self.tau > 2.5:
+                            self.motion_control.stop()
+                            self.logger.log("Stopped due excess violation of real-time deadline. Total time = " + str(total_time))
+                            should_exit = True
+                            break
 
                 if last_controlloop:
                     break
