@@ -21,6 +21,7 @@ target_vals = []
 hrListTar = []
 tau = 0.25
 sym_control = RemoteSymbolicController(SYMCONTROL_SERVER_URI)
+localization_server = []
 
 # making a dummy request to close the current ccontrol-requests session
 def send_dummy_getcontrol_req():
@@ -38,35 +39,9 @@ def stack_hrs(hrList):
     return ret_str
 
 def new_control_task(loc_server, logger):
-    global curr_target
-    global target_vals
-    global hrListTar
-
-    # prepare targets/obstacles
-    hrListTar = loc_server.get_hyper_rec_str("Target")
-    target_str = stack_hrs(hrListTar)
-    obstacles_str = stack_hrs(loc_server.get_hyper_rec_str("Obstacle"))
-    if (target_str == ""):
-        logger.log("Exiting as no targets in the scene.")
-        return True
-
-    # set target
-    target_str = hrListTar[curr_target][1]    
-    target_vals = str(target_str).replace('{','').replace('}','')
-    target_vals = target_vals.split(',')
-
-    # make a synthsize controller request and wait for the controller
-    try:
-        mode = "unknown"
-        while mode != "collect_synth":
-            mode = sym_control.getMode()
-
-        sym_control.synthesize_controller(obstacles_str, target_str, False)
-        return False
-    except:
-        logger.log("Controller synthesis Failed.")
-        return True
-
+    global localization_server
+    localization_server = loc_server
+    return False
 
 def get_next_action(last_action, new_actions, state, logger):
     state = list(map(float, state.replace("(","").replace(")","").split(',')))
@@ -103,7 +78,34 @@ def get_control_action(s, logger):
     global target_vals
     global hrListTar
     global last_action
+    global localization_server
 
+
+    # prepare targets/obstacles
+    hrListTar = localization_server.get_hyper_rec_str("Target")
+    target_str = stack_hrs(hrListTar)
+    obstacles_str = stack_hrs(localization_server.get_hyper_rec_str("Obstacle"))
+    if (target_str == ""):
+        logger.log("Exiting as no targets in the scene.")
+        return True
+
+    # set target
+    target_str = hrListTar[curr_target][1]    
+    target_vals = str(target_str).replace('{','').replace('}','')
+    target_vals = target_vals.split(',')
+
+    # make a synthsize controller request and wait for the controller
+    try:
+        mode = "unknown"
+        while mode != "collect_synth":
+            mode = sym_control.getMode()
+
+        sym_control.synthesize_controller(obstacles_str, target_str, False)
+    except:
+        logger.log("Controller synthesis Failed.")
+        return [True, "stop"]
+
+    # are we already in a target ?
     if (s[0] >= float(target_vals[0]) and s[0] <= float(target_vals[1])) and (s[1] >= float(target_vals[2]) and s[1] <= float(target_vals[3])):
         send_dummy_getcontrol_req()
         logger.log("Reached the target set #" + str(curr_target) + ". S=" + str(s))
@@ -112,18 +114,17 @@ def get_control_action(s, logger):
             curr_target = 0
         return [True, "stop"]
 
-    s_send = str(s).replace('[','(').replace(']',')')
-
+    # get controls from the sym control server
     try:
+        s_send = str(s).replace('[','(').replace(']',')')
         u_psi_list = sym_control.get_controls(s_send, True) 
     except:
         logger.log("Failed to get actions list from the sym-control server.")
         return [True, None]
 
-    # electing one action
+    # selecting one action
     actions_list = u_psi_list.replace(" ","").split('|')
     if len(actions_list) == 0:
-        send_dummy_getcontrol_req()
         logger.log("The controller returned no actions.")
         return [True, "stop"]
 
