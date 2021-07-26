@@ -19,7 +19,7 @@ SYMCONTROL_SERVER_URI = "http://" + COMPUTE_SERVER_IPPORT + "/pFaces/REST/dictio
 curr_target = 0
 target_vals = []
 hrListTar = []
-tau = 0.25
+tau = 0.0
 sym_control = RemoteSymbolicController(SYMCONTROL_SERVER_URI)
 localization_server = []
 
