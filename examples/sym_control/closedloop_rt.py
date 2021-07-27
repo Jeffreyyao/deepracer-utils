@@ -106,7 +106,7 @@ def get_control_action(s, logger):
     # synthsize a controller + get actions
     try:
         s_send = str(s).replace('[','(').replace(']',')')
-        u_psi_list = sym_control.synthesize_controller_get_actions(self, obstacles_str, target_str, s_send)
+        u_psi_list = sym_control.synthesize_controller_get_actions(obstacles_str, target_str, s_send)
         
     except:
         logger.log("Controller synthesis / action collection failed.")
