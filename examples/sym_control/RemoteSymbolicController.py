@@ -1,4 +1,7 @@
 import RESTApiClient
+import time
+
+SLEEP_TIME = 0.005
 
 class RemoteSymbolicController():
     def __init__(self, url):
@@ -67,3 +70,38 @@ class RemoteSymbolicController():
 
         # extract actions
         return data["actions_list"]
+
+    # a combined realtime version of the above two functions
+    def synthesize_controller_get_actions(self, obstacles_str, target_str, state_str):
+        # wait for synth-mode
+        mode = self.getMode()
+        while mode != "collect_synth":
+            time.sleep(SLEEP_TIME)
+            mode = self.getMode()
+
+        json_data = {
+            "target_set":target_str,
+            "obst_set":obstacles_str,
+            "is_last_synth_request":"false",
+            "is_synth_requested":"true",
+            "current_state":state_str,
+            "is_control_requested":"true",
+            "is_last_control_request":"true"
+        }
+        self.rest_client.restPUTjson(json_data)
+
+        # wait for control ready
+        data = ""
+        is_control_ready = ""
+        while is_control_ready != "true":
+            time.sleep(SLEEP_TIME)
+            data =self.rest_client.restGETjson()
+            is_control_ready = data["is_control_ready"]
+        
+        # acknowledge
+        json_data = {"is_control_recieved":"true"}
+        self.rest_client.restPUTjson(json_data)
+
+        # extract actions
+        return data["actions_list"]
+

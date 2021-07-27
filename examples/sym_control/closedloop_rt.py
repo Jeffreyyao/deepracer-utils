@@ -94,17 +94,6 @@ def get_control_action(s, logger):
     target_vals = str(target_str).replace('{','').replace('}','')
     target_vals = target_vals.split(',')
 
-    # make a synthsize controller request and wait for the controller
-    try:
-        mode = "unknown"
-        while mode != "collect_synth":
-            mode = sym_control.getMode()
-
-        sym_control.synthesize_controller(obstacles_str, target_str, False)
-    except:
-        logger.log("Controller synthesis Failed.")
-        return [True, "stop"]
-
     # are we already in a target ?
     if (s[0] >= float(target_vals[0]) and s[0] <= float(target_vals[1])) and (s[1] >= float(target_vals[2]) and s[1] <= float(target_vals[3])):
         send_dummy_getcontrol_req()
@@ -114,13 +103,14 @@ def get_control_action(s, logger):
             curr_target = 0
         return [True, "stop"]
 
-    # get controls from the sym control server
+    # synthsize a controller + get actions
     try:
         s_send = str(s).replace('[','(').replace(']',')')
-        u_psi_list = sym_control.get_controls(s_send, True) 
+        u_psi_list = sym_control.synthesize_controller_get_actions(self, obstacles_str, target_str, s_send)
+        
     except:
-        logger.log("Failed to get actions list from the sym-control server.")
-        return [True, None]
+        logger.log("Controller synthesis / action collection failed.")
+        return [True, "stop"]
 
     # selecting one action
     actions_list = u_psi_list.replace(" ","").split('|')
