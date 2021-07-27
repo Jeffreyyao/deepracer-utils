@@ -72,13 +72,13 @@ class DeepRacerController():
                     break
 
                 control_time_start = time.time()
-                try:
-                    (last_controlloop, action) = self.get_control_action(s, self.logger)
-                except:
-                    self.logger.log("Stopping due to error in getting control ations.")
-                    self.motion_control.stop()
-                    should_exit = True
-                    break
+                #try:
+                (last_controlloop, action) = self.get_control_action(s, self.logger)
+                # except:
+                #     self.logger.log("Stopping due to error in getting control ations.")
+                #     self.motion_control.stop()
+                #     should_exit = True
+                #     break
                 control_time_end = time.time()
                 control_total_time = (control_time_end - control_time_start) # measuring how long time request takes
 

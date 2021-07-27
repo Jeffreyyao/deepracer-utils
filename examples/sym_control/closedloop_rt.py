@@ -96,7 +96,6 @@ def get_control_action(s, logger):
 
     # are we already in a target ?
     if (s[0] >= float(target_vals[0]) and s[0] <= float(target_vals[1])) and (s[1] >= float(target_vals[2]) and s[1] <= float(target_vals[3])):
-        send_dummy_getcontrol_req()
         logger.log("Reached the target set #" + str(curr_target) + ". S=" + str(s))
         curr_target += 1
         if curr_target == len(hrListTar):
