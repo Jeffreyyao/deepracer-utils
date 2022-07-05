@@ -1,19 +1,23 @@
 # deepracer-utils
-Tools and experiements for the AWS DeepRacer.
+Tools and experiements for the AWS DeepRacer with Ros2 Foxy.
 
 
 ## Installation
 ```
-$ git clone https://github.com/HyConSys/deepracer-utils
+$ git clone https://github.com/Jeffreyyao/deepracer-utils.git
 ```
 
 
 ## Initialization
+
+Log in to root user first with `$ sudo su`
+
 ```
-$ cd /deepracer-utils
-$ source /opt/aws/deepracer/setup.sh
-$ python put_best_cal.py
+$ source /opt/ros/foxy/setup.bash
+$ source /root/deepracer_ws/aws-deepracer/servo-pkg/install/setup.sh
 ```
+
+Ros2 with necessary nodes will start running, [Ros2 Foxy documentation](https://docs.ros.org/en/foxy/index.html).
 
 ## The control loop
 
