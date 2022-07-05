@@ -12,7 +12,7 @@ from DeepRacerController import DeepRacerController
 from RemoteSymbolicController import RemoteSymbolicController
 
 STOP_AFTER_LAST_TARGET = False
-ROBOT_NAME = "DeepRacer1"
+ROBOT_NAME = "DeepRacer2"
 LOCALIZATION_SERVER_IPPORT = "192.168.1.194:12345"
 COMPUTE_SERVER_IPPORT = "192.168.1.147:12345"
 SYMCONTROL_SERVER_URI = "http://" + COMPUTE_SERVER_IPPORT + "/pFaces/REST/dictionary/"+ROBOT_NAME
