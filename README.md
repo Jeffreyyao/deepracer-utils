@@ -14,7 +14,7 @@ Log in to root user first with `$ sudo su`
 
 ```
 $ source /opt/ros/foxy/setup.bash
-$ source /root/deepracer_ws/aws-deepracer/servo-pkg/install/setup.sh
+$ source /root/deepracer_ws/aws-deepracer-servo-pkg/install/setup.sh
 ```
 
 ROS 2 with necessary nodes will start running, [ROS 2 Foxy documentation](https://docs.ros.org/en/foxy/index.html).
