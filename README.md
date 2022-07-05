@@ -1,5 +1,5 @@
 # deepracer-utils
-Tools and experiements for the AWS DeepRacer with Ros2 Foxy.
+Tools and experiements for the AWS DeepRacer with ROS 2 Foxy.
 
 
 ## Installation
@@ -17,7 +17,7 @@ $ source /opt/ros/foxy/setup.bash
 $ source /root/deepracer_ws/aws-deepracer/servo-pkg/install/setup.sh
 ```
 
-Ros2 with necessary nodes will start running, [Ros2 Foxy documentation](https://docs.ros.org/en/foxy/index.html).
+ROS 2 with necessary nodes will start running, [ROS 2 Foxy documentation](https://docs.ros.org/en/foxy/index.html).
 
 ## The control loop
 
