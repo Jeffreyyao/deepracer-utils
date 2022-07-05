@@ -20,8 +20,8 @@ In a terminal window, run the following lines:
 $ ssh root@192.168.1.110
 $ source /opt/ros/foxy/setup.bash
 $ source /root/deepracer_ws/aws-deepracer-servo-pkg/install/setup.sh
-$ cd deepracer-utils/examples
-$ python3 sym_control/closedloop_online.py
+$ cd deepracer-utils/examples/sym_control
+$ python3 closedloop_online.py
 ```
 
 ##
