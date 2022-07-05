@@ -12,6 +12,8 @@ class MotionControls:
         self.publisher.publish(msg)
 
     def drive(self, angle, throttle):
+        if throttle!=0 and throttle<0.8:
+            throttle = 0.8
         msg = ServoCtrlMsg(angle=float(angle), throttle=float(throttle))
         self.publisher.publish(msg)
 
