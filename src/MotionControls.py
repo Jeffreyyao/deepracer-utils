@@ -1,27 +1,19 @@
-import rospy
-from ctrl_pkg.msg import ServoCtrlMsg
+import rclpy
+from deepracer_interfaces_pkg.msg import ServoCtrlMsg
 
 class MotionControls:
     def __init__(self):
-        self.pub_manual_drive = None
-        self.init_publisher()
-        self.stop()
-
-    def init_publisher(self):
-        self.pub_manual_drive = rospy.Publisher('manual_drive', ServoCtrlMsg, queue_size=10)
-        rospy.init_node('deepracer_lanekeeper', anonymous=False)
+        rclpy.init()
+        node = rclpy.create_node("manual_drive_publisher")
+        self.publisher = node.create_publisher(ServoCtrlMsg,"/ctrl_pkg/servo_msg",10)
 
     def stop(self):
-        msg = ServoCtrlMsg()
-        msg.angle    = 0.0
-        msg.throttle = 0.0
-        self.pub_manual_drive.publish(msg)
+        msg = ServoCtrlMsg(angle=0.0, throttle=0.0)
+        self.publisher.publish(msg)
 
     def drive(self, angle, throttle):
-        msg = ServoCtrlMsg()
-        msg.angle    = angle
-        msg.throttle = throttle
-        self.pub_manual_drive.publish(msg)
+        msg = ServoCtrlMsg(angle=float(angle), throttle=float(throttle))
+        self.publisher.publish(msg)
 
     def __del__(self):
         self.stop()
