@@ -10,17 +10,18 @@
 ## Steps to set up the symbolic control server
 
 1. Run the closedloop_online example for symbolic control. The steps for this can be found in the section below showing how to connect to the DeepRacer.
-2. The URL for the symbolic control server is: http://CUBLabMediaServer:12345/12345/pFaces/REST/dictionary/DeepRacer1
+2. The URL for the symbolic control server is: http://CUBLabMediaServer:12345/12345/pFaces/REST/dictionary/DeepRacer2
 
 ### To connect to the DeepRacer
 
 In a terminal window, run the following lines:
 
 ```
-$ ssh deepracer@192.168.1.70
-$ source /opt/aws/deepracer/setup.sh
-$ python put_best_cal.py
-$ python sym_control/closedloop_online.py
+$ ssh root@192.168.1.110
+$ source /opt/ros/foxy/setup.bash
+$ source /root/deepracer_ws/aws-deepracer/servo-pkg/install/setup.sh
+$ cd deepracer-utils/examples
+$ python3 sym_control/closedloop_online.py
 ```
 
 ##
