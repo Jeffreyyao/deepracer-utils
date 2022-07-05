@@ -1,5 +1,5 @@
 # deepracer-utils
-Tools and experiements for the AWS DeepRacer with ROS 2 Foxy. (Specifically for DeeoRacer 2.)
+Tools and experiements for the AWS DeepRacer with ROS 2 Foxy. (Specifically for DeepRacer 2.)
 
 
 ## Installation
