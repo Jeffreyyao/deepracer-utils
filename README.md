@@ -10,7 +10,7 @@ $ git clone https://github.com/Jeffreyyao/deepracer-utils.git
 
 ## Initialization
 
-Log in to root user first with `$ sudo su`
+Log in to root user first with `$ sudo su` or `$ ssh root@ip`
 
 ```
 $ source /opt/ros/foxy/setup.bash
