@@ -3,8 +3,8 @@ sys.path.append("../src")
 from MotionControls import MotionControls
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
-maxThrottle = 1
-maxAngle = -1
+maxThrottle = 0.7
+maxAngle = -0.7
 throttle = 0
 angle = 0
 
